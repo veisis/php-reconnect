@@ -20,7 +20,7 @@ jobs:
                 command: |
                     sleep 2
                     sudo pecl install -o -f redis
-                    sudo docker-php-ext-install pdo_mysql bcmath
+                    sudo docker-php-ext-install pdo_mysql bcmath sockets
                     sudo docker-php-ext-enable redis
 
             - run:
