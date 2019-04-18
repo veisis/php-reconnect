@@ -24,6 +24,11 @@ jobs:
                     sudo docker-php-ext-enable redis
 
             - run:
+                name: Load dependencies
+                command: |
+                    composer install
+
+            - run:
                 name: Run background PHPRedis worker
                 background: true
                 command: |
