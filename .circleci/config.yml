@@ -1,0 +1,41 @@
+version: 2
+jobs:
+    build:
+        docker:
+          - image: circleci/php:7.1-cli
+          - image: mysql:5.7
+            environment:
+                MYSQL_ROOT_PASSWORD: root
+          - image: redis:4-alpine
+          - image: rabbitmq:3-management-alpine
+
+        working_directory: ~/project
+        steps:
+            - checkout
+            - setup_remote_docker:
+                docker_layer_caching: true
+
+            - run:
+                name: Install pdo_mysql driver
+                command: |
+                    sleep 2
+                    sudo pecl install -o -f redis
+                    sudo docker-php-ext-install pdo_mysql bcmath
+                    sudo docker-php-ext-enable redis
+
+            - run:
+                name: Run background PHPRedis worker
+                background: true
+                command: |
+                    php Tests/scripts/phpredis-worker.php
+
+            - run:
+                name: Run background AMQP worker
+                background: true
+                command: |
+                    php Tests/scripts/amqp-worker.php
+
+            - run:
+                name: Run tests
+                command: |
+                    php vendor/bin/phpunit Tests
