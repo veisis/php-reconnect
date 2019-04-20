@@ -43,9 +43,12 @@ class AMQPReconnect extends Reconnect
      * Reconnect.
      *
      * @param AbstractConnection $object
+     * @param array              $parameters
      */
-    protected static function reconnect($object)
-    {
+    protected static function reconnect(
+        $object,
+        array $parameters
+    ) {
         $object->close();
         $object->reconnect();
     }

@@ -29,7 +29,7 @@ class DBALReconnect extends Reconnect
      *
      * @return string[]
      */
-    static protected function getDisconnectedExceptionsClass(): array
+    protected static function getDisconnectedExceptionsClass(): array
     {
         return [
             DBALException::class,
@@ -41,9 +41,12 @@ class DBALReconnect extends Reconnect
      * Reconnect.
      *
      * @param Connection $object
+     * @param array      $parameters
      */
-    static protected function reconnect($object)
-    {
+    protected static function reconnect(
+        $object,
+        array $parameters
+    ) {
         $object->close();
         $object->connect();
     }

@@ -43,6 +43,7 @@ $result = DBALReconnect::tryOrReconnect(
         return $connection->doWhatever();
     },
     $connection,
+    [], // Unused parameters
     3, // Number of retries before throwing Exception. By default -1 / Infinite
     1, // Seconds between each try. By default 0
     new \Exception // Exception to throw after N tries. By default, last one
@@ -83,6 +84,7 @@ $result = AMQPReconnect::tryOrReconnect(
         return $connection->doWhatever();
     },
     $connection,
+    [], // Unused parameters
     3, // Number of retries before throwing Exception. By default -1 / Infinite
     1, // Seconds between each try. By default 0
     new \Exception // Exception to throw after N tries. By default, last one
@@ -129,6 +131,11 @@ $result = PHPRedisReconnect::tryOrReconnect(
         return $redis->doWhatever();
     },
     $redis,
+    [
+        'host' => '127.0.0.1', // Host
+        'port' => 6379, // Port, by default 6379
+        'timeout' => 1.0 // Timeout, by default 0.0
+    ], // Connection parameters
     3, // Number of retries before throwing Exception. By default -1 / Infinite
     1, // Seconds between each try. By default 0
     new \Exception // Exception to throw after N tries. By default, last one

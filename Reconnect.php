@@ -28,6 +28,7 @@ abstract class Reconnect
      *
      * @param Closure   $callback
      * @param mixed     $connector
+     * @param array     $parameters
      * @param int       $times
      * @param int       $secondsBetweenTries
      * @param Exception $exceptionToThrow
@@ -39,6 +40,7 @@ abstract class Reconnect
     public static function tryOrReconnect(
         Closure $callback,
         $connector,
+        array $parameters = [],
         int $times = -1,
         int $secondsBetweenTries = 1,
         Exception $exceptionToThrow = null
@@ -64,7 +66,10 @@ abstract class Reconnect
             }
 
             sleep($secondsBetweenTries);
-            static::reconnect($connector);
+            static::reconnect(
+                $connector,
+                $parameters
+            );
         }
 
         throw ($exceptionToThrow ?? $exception);
@@ -75,12 +80,16 @@ abstract class Reconnect
      *
      * @return string[]
      */
-    abstract static protected function getDisconnectedExceptionsClass(): array;
+    abstract protected static function getDisconnectedExceptionsClass(): array;
 
     /**
      * Reconnect.
      *
      * @param $object
+     * @param array $parameters
      */
-    abstract static protected function reconnect($object);
+    abstract protected static function reconnect(
+        $object,
+        array $parameters
+    );
 }

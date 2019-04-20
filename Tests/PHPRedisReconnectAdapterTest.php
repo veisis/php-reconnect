@@ -81,4 +81,17 @@ class PHPRedisReconnectAdapterTest extends ReconnectAdapterTest
             }
         } while (empty($openedClientsList));
     }
+
+    /**
+     * Get connection parameters.
+     *
+     * @return array
+     */
+    protected function getConnectionParameters(): array
+    {
+        return [
+            'host' => '127.0.0.1',
+            'port' => 6379,
+        ];
+    }
 }
