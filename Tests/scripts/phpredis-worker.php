@@ -34,5 +34,6 @@ echo 'Connected to Redis'.PHP_EOL;
             throw $exception;
         }
     },
-    $redis
+    $redis,
+    ['host' => '127.0.0.1']
 );

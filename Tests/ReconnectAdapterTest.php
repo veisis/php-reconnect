@@ -39,6 +39,7 @@ abstract class ReconnectAdapterTest extends TestCase
                 return $this->makeSimpleAction($connectionObject);
             },
             $connectionObject,
+            $this->getConnectionParameters(),
             2
         );
         $this->assertTrue($result);
@@ -73,4 +74,14 @@ abstract class ReconnectAdapterTest extends TestCase
      * @param mixed $object
      */
     abstract protected function forceConnectionDrop($object);
+
+    /**
+     * Get connection parameters.
+     *
+     * @return array
+     */
+    protected function getConnectionParameters(): array
+    {
+        return [];
+    }
 }

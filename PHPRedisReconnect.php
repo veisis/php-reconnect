@@ -40,10 +40,17 @@ class PHPRedisReconnect extends Reconnect
      * Reconnect.
      *
      * @param Redis|RedisCluster $object
+     * @param array              $parameters
      */
-    protected static function reconnect($object)
-    {
+    protected static function reconnect(
+        $object,
+        array $parameters
+    ) {
         $object->close();
-        $object->connect('127.0.0.1', 6379);
+        $object->connect(
+            $parameters['host'],
+            \intval($parameters['port'] ?? 6379),
+            \floatval($parameters['timeout'] ?? 0.0)
+        );
     }
 }
