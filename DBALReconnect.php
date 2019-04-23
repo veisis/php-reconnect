@@ -17,6 +17,7 @@ namespace Apisearch\Reconnect;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Driver\PDOException;
 use Doctrine\DBAL\Exception\DriverException;
 
 /**
@@ -34,6 +35,7 @@ class DBALReconnect extends Reconnect
         return [
             DBALException::class,
             DriverException::class,
+            PDOException::class,
         ];
     }
 

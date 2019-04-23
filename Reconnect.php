@@ -47,9 +47,17 @@ abstract class Reconnect
     ) {
         $iterations = $times;
         $exception = new Exception();
+        $mustReconnect = false;
 
         while (true) {
             try {
+                if ($mustReconnect) {
+                    static::reconnect(
+                        $connector,
+                        $parameters
+                    );
+                }
+
                 return $callback($connector);
             } catch (Exception $exception) {
                 if (!in_array(get_class($exception), static::getDisconnectedExceptionsClass())) {
@@ -66,10 +74,7 @@ abstract class Reconnect
             }
 
             sleep($secondsBetweenTries);
-            static::reconnect(
-                $connector,
-                $parameters
-            );
+            $mustReconnect = true;
         }
 
         throw ($exceptionToThrow ?? $exception);
