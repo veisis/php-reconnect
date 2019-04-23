@@ -19,6 +19,7 @@ use PhpAmqpLib\Connection\AbstractConnection;
 use PhpAmqpLib\Exception\AMQPConnectionClosedException;
 use PhpAmqpLib\Exception\AMQPIOException;
 use PhpAmqpLib\Exception\AMQPProtocolConnectionException;
+use PhpAmqpLib\Wire\IO\AbstractIO;
 
 /**
  * Class AMQPReconnect.
@@ -36,6 +37,7 @@ class AMQPReconnect extends Reconnect
             AMQPConnectionClosedException::class,
             AMQPIOException::class,
             AMQPProtocolConnectionException::class,
+            AbstractIO::class,
         ];
     }
 
